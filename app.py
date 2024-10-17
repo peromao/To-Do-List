@@ -68,6 +68,24 @@ def delete_task(id):
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": "Erro ao deletar a tarefa", "details": str(e)}), 500
+    
+@app.route('/tasks', methods=['DELETE'])
+def delete_all_tasks():
+    try:
+        tasks = Task.query.all()
+
+        if not tasks:
+            return jsonify({"message": "Nenhuma tarefa encontrada para deletar."}), 404
+
+        Task.query.delete()
+        db.session.commit()
+
+        return jsonify({"message": "Todas as tarefas foram deletadas com sucesso!"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": "Erro ao deletar as tarefas", "details": str(e)}), 500
+
 
 @app.route('/task/update/<int:id>', methods=['PUT'])
 def update_task(id):
