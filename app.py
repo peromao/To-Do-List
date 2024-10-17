@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from models import db
 from models.task import Task
 
@@ -9,8 +9,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhos
 db.init_app(app)
 
 @app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def home():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     with app.app_context():
