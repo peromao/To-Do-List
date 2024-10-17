@@ -39,6 +39,11 @@ def add_task():
     except Exception as e:
         return jsonify({"error": "Erro ao adicionar a tarefa", "details": str(e)}), 500
 
+@app.route('/tasks', methods=['GET'])
+def list_tasks():
+    tasks = Task.query.all()
+    return jsonify([{'id': task.id, 'title': task.title, 'status': task.status} for task in tasks])
+
 
 if __name__ == '__main__':
     with app.app_context():
