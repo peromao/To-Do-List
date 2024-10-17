@@ -44,6 +44,28 @@ def list_tasks():
     tasks = Task.query.all()
     return jsonify([{'id': task.id, 'title': task.title, 'status': task.status} for task in tasks])
 
+@app.route('/task/delete/<int:id>', methods=['DELETE'])
+def delete_task(id):
+    try:
+        task = Task.query.get(id)
+        
+        if not task:
+            return jsonify({"error": "Tarefa não encontrada"}), 404
+        
+        db.session.delete(task)
+        db.session.commit()
+        
+        return jsonify({
+            'id': task.id,
+            'title': task.title,
+            'status': task.status,
+            "message": "Tarefa removida com sucesso!"
+        })
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": "Erro ao deletar a tarefa", "details": str(e)}), 500
+
 
 if __name__ == '__main__':
     with app.app_context():
