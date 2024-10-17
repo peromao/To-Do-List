@@ -29,6 +29,9 @@ def add_task():
         if not title:
             return jsonify({"error": "O título não pode estar vazio"}), 400
         
+        if status not in ['pending', 'completed']:
+            return jsonify({"error": "Status inválido. Use 'pending' ou 'completed'."}), 400
+        
         task = Task(title=title, status=status)
         
         db.session.add(task)
@@ -81,6 +84,9 @@ def update_task(id):
         
         if status == task.status:
             return jsonify({"message": "Status era o mesmo, sem alterações."}), 200
+        
+        if status not in ['pending', 'completed']:
+            return jsonify({"error": "Status inválido. Use 'pending' ou 'completed'."}), 400
         
         task.status = status
         
