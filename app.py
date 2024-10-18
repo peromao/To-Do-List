@@ -15,46 +15,6 @@ register_blueprints(app)
 def home():
     return render_template('index.html')
 
-@app.route('/task/delete/<int:id>', methods=['DELETE'])
-def delete_task(id):
-    try:
-        task = Task.query.get(id)
-        
-        if not task:
-            return jsonify({"error": "Tarefa não encontrada"}), 404
-        
-        db.session.delete(task)
-        db.session.commit()
-        
-        return jsonify({
-            'id': task.id,
-            'title': task.title,
-            'status': task.status,
-            "message": "Tarefa removida com sucesso!"
-        })
-    
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": "Erro ao deletar a tarefa", "details": str(e)}), 500
-    
-@app.route('/tasks', methods=['DELETE'])
-def delete_all_tasks():
-    try:
-        tasks = Task.query.all()
-
-        if not tasks:
-            return jsonify({"message": "Nenhuma tarefa encontrada para deletar."}), 404
-
-        Task.query.delete()
-        db.session.commit()
-
-        return jsonify({"message": "Todas as tarefas foram deletadas com sucesso!"}), 200
-
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": "Erro ao deletar as tarefas", "details": str(e)}), 500
-
-
 @app.route('/task/update/<int:id>', methods=['PUT'])
 def update_task(id):
     try:
