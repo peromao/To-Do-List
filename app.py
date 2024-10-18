@@ -1,21 +1,27 @@
 from flask import Flask, render_template
 from models import db
-from routes import register_blueprints
 from config import Config
+from cache import cache
+from routes import register_blueprints
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
 
-app.config.from_object(Config)
+    app.config.from_object(Config)
 
-db.init_app(app)
+    cache.init_app(app)
+    db.init_app(app)
 
-register_blueprints(app)
+    register_blueprints(app)
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+    @app.route('/')
+    def home():
+        return render_template('index.html')
+
+    return app
 
 if __name__ == '__main__':
+    app = create_app()
     with app.app_context():
         db.create_all()
     app.run(debug=Config.DEBUG)

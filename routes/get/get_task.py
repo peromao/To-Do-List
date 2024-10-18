@@ -1,10 +1,11 @@
 from flask import Blueprint, jsonify
 from models.task import Task
-from models import db
+from cache import cache
 
 get_routes = Blueprint('get_routes', __name__)
 
 @get_routes.route('/tasks', methods=['GET'])
+@cache.cached(timeout=60)
 def list_tasks():
     """
     Retorna a lista de todas as tarefas no banco de dados.
