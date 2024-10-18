@@ -13,6 +13,13 @@ register_blueprints(app)
 
 @app.route('/')
 def home():
+    """
+    Serve a página inicial quando requisitada.
+
+    Retorno esperado:
+        Renderiza e retorna a página inicial da aplicação ('index.html').
+    """
+
     return render_template('index.html')
 
 if __name__ == '__main__':

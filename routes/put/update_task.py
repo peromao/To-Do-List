@@ -6,6 +6,24 @@ put_routes = Blueprint('put_routes', __name__)
 
 @put_routes.route('/task/update/<int:id>', methods=['PUT'])
 def update_task(id):
+    """
+    Atualiza o status de uma tarefa existente no banco de dados com base no ID fornecido.
+
+    Parâmetros:
+        id (int): O ID da tarefa que será atualizada.
+
+    Requisição:
+        A função espera uma requisição JSON contendo o campo 'status' com o valor 'pending' ou 'completed'.
+        {
+            "status": "pending" | "completed"
+        }
+
+    Retorno esperado:
+        Uma mensagem de sucesso e o status HTTP 200:
+        {
+            "message": "Status da tarefa atualizado com sucesso!"
+        }
+    """
     try:
         task = Task.query.get(id)
         

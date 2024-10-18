@@ -6,6 +6,21 @@ delete_routes = Blueprint('delete_routes', __name__)
 
 @delete_routes.route('/task/delete/<int:id>', methods=['DELETE'])
 def delete_task(id):
+    """
+    Remove uma tarefa do banco de dados com base no ID fornecido.
+
+    Parâmetros:
+        id (int): O ID da tarefa que será deletada.
+
+    Retorno esperado:
+        Um JSON com os detalhes da tarefa removida e o status HTTP 200:
+        {
+            'id': <id_da_tarefa>,
+            'title': <titulo_da_tarefa>,
+            'status': <status_da_tarefa>,
+            "message": "Tarefa removida com sucesso!"
+        }
+    """
     try:
         task = Task.query.get(id)
         
@@ -28,6 +43,15 @@ def delete_task(id):
     
 @delete_routes.route('/tasks', methods=['DELETE'])
 def delete_all_tasks():
+    """
+    Remove todas as tarefas do banco de dados.
+
+    Retorno esperado:
+        Um JSON confirmando a remoção e o status HTTP 200:
+        {
+            "message": "Todas as tarefas foram deletadas com sucesso!"
+        }
+    """
     try:
         tasks = Task.query.all()
 
