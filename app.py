@@ -15,11 +15,6 @@ register_blueprints(app)
 def home():
     return render_template('index.html')
 
-@app.route('/tasks', methods=['GET'])
-def list_tasks():
-    tasks = Task.query.all()
-    return jsonify([{'id': task.id, 'title': task.title, 'status': task.status} for task in tasks])
-
 @app.route('/task/delete/<int:id>', methods=['DELETE'])
 def delete_task(id):
     try:
