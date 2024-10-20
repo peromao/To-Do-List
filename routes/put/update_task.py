@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from models.task import Task
 from models import db
+from cache import cache
 
 put_routes = Blueprint('put_routes', __name__)
 
@@ -44,6 +45,8 @@ def update_task(id):
         task.status = status
         
         db.session.commit()
+
+        cache.delete('cached_tasks')
 
         return jsonify({"message": "Status da tarefa atualizado com sucesso!"})
     

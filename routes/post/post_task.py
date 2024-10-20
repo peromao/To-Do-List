@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from models.task import Task
 from models import db
+from cache import cache
 
 post_routes = Blueprint('post_routes', __name__)
 
@@ -41,6 +42,8 @@ def add_task():
         
         db.session.add(task)
         db.session.commit()
+
+        cache.delete('cached_tasks')
         
         return jsonify({"message": "Tarefa adicionada com sucesso!"}), 201
 
