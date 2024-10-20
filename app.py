@@ -17,9 +17,13 @@ def create_app():
 
     register_blueprints(app)
 
-    @app.route('/')
+    @app.route('/home')
     def home():
         return render_template('index.html')
+    
+    @app.route('/serve_register')
+    def serve_register():
+        return render_template('register.html')
 
     return app
 
