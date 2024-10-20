@@ -2,11 +2,13 @@ from flask import Blueprint, jsonify, request
 from models.task import Task
 from models import db
 from cache import cache
+from flask_jwt_extended import jwt_required
 from auxiliary import clean_input
 
 put_routes = Blueprint('put_routes', __name__)
 
 @put_routes.route('/task/update/<int:id>', methods=['PUT'])
+@jwt_required()
 def update_task(id):
     """
     Atualiza o status de uma tarefa existente no banco de dados com base no ID fornecido.

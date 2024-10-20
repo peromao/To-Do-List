@@ -3,10 +3,12 @@ from models.task import Task
 from models import db
 from cache import cache
 from auxiliary import clean_input
+from flask_jwt_extended import jwt_required
 
 post_routes = Blueprint('post_routes', __name__)
 
 @post_routes.route('/task/add', methods=['POST'])
+@jwt_required()
 def add_task():
     """
     Adiciona uma nova tarefa ao banco de dados.

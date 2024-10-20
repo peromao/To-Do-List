@@ -1,11 +1,13 @@
 from flask import Blueprint, jsonify
 from models.task import Task
 from models import db
+from flask_jwt_extended import jwt_required
 from cache import cache
 
 delete_routes = Blueprint('delete_routes', __name__)
 
 @delete_routes.route('/task/delete/<int:id>', methods=['DELETE'])
+@jwt_required()
 def delete_task(id):
     """
     Remove uma tarefa do banco de dados com base no ID fornecido.
@@ -45,6 +47,7 @@ def delete_task(id):
         return jsonify({"error": "Erro ao deletar a tarefa", "details": str(e)}), 500
     
 @delete_routes.route('/tasks', methods=['DELETE'])
+@jwt_required()
 def delete_all_tasks():
     """
     Remove todas as tarefas do banco de dados.

@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from flask_jwt_extended import JWTManager
 from models import db
 from config import Config
 from cache import cache
@@ -11,6 +12,8 @@ def create_app():
 
     cache.init_app(app)
     db.init_app(app)
+
+    jwt = JWTManager(app)
 
     register_blueprints(app)
 
