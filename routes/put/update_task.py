@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from models.task import Task
 from models import db
 from cache import cache
+from auxiliary import clean_input
 
 put_routes = Blueprint('put_routes', __name__)
 
@@ -31,7 +32,7 @@ def update_task(id):
         if not task:
             return jsonify({"error": "Tarefa não encontrada"}), 404
         
-        status = request.json.get('status')
+        status = clean_input(request.json.get('status'))
         
         if status is None:
             return jsonify({"error": "O campo 'status' é obrigatório."}), 400
