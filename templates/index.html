@@ -4,9 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/styles.css">
-    <title> App de Tarefas </title>
+    <title>App de Tarefas</title>
 </head>
 <body>
-    <h1 id="page-title"> App de Tarefas </h1>
+    <h1 id="page-title">App de Tarefas</h1>
+
+    <div class="task-form">
+        <input type="text" id="task-title" placeholder="Título da Tarefa">
+        <button id="add-task-btn">Adicionar Tarefa</button>
+    </div>
+
+    <div class="delete-all-tasks">
+        <button id="delete-all-tasks-btn">Deletar Todas as Tarefas</button>
+    </div>
+
+    <div class="task-list">
+        <h2>Tarefas:</h2>
+        <ul id="task-container"></ul>
+    </div>
+
+    <script src="../static/js/index.js"></script>
 </body>
 </html>
