@@ -4,6 +4,7 @@ from models import db
 from config import Config
 from cache import cache
 from routes import register_blueprints
+from flask_jwt_extended import jwt_required
 
 def create_app():
     app = Flask(__name__)
@@ -24,6 +25,10 @@ def create_app():
     @app.route('/serve_register')
     def serve_register():
         return render_template('register.html')
+    
+    @app.route('/')
+    def login():
+        return render_template('login.html')
 
     return app
 
