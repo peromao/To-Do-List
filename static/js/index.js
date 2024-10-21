@@ -32,6 +32,7 @@ function addTask() {
     fetch('/task/add', {
         method: 'POST',
         headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ title: title, status: 'pending' })
@@ -48,6 +49,7 @@ function updateTask(id) {
     fetch(`/task/update/${id}`, {
         method: 'PUT',
         headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ status: 'completed' })
@@ -62,7 +64,11 @@ function updateTask(id) {
 
 function deleteTask(id) {
     fetch(`/task/delete/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json'
+        }
     })
     .then(response => response.json())
     .then(data => {
@@ -75,7 +81,11 @@ function deleteTask(id) {
 function deleteAllTasks() {
     if (confirm("Você tem certeza que deseja deletar todas as tarefas?")) {
         fetch('/tasks', {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                'Content-Type': 'application/json'
+            }
         })
         .then(response => response.json())
         .then(data => {
@@ -87,7 +97,5 @@ function deleteAllTasks() {
 }
 
 document.getElementById('delete-all-tasks-btn').addEventListener('click', deleteAllTasks);
-
 document.getElementById('add-task-btn').addEventListener('click', addTask);
-
 fetchTasks();

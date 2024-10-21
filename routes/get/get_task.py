@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
 from models.task import Task
+from flask_jwt_extended import jwt_required
 from cache import cache
 
 get_routes = Blueprint('get_routes', __name__)
